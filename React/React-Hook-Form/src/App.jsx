@@ -4,40 +4,69 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 function App() {
   const yupSchema = yup.object({
-    name: yup
-      .string()
-      .required("Le champ est obligatoire")
-      .min(2, "Trop court")
-      .max(5, "Trop long"),
-    password: yup
-      .string()
-      .required("Le mot de passe est obligatoire")
-      .min(5, "Mot de passe trop court")
-      .max(15, "Mot de passe trop long"),
-    confirmPassword: yup
-      .string()
-      .required("Vous devez confirmer votre mot de passe")
-      .oneOf(
-        [yup.ref("password"), ""],
-        "Les mots de passes ne sont pas les mêmes"
-      ),
+    // name: yup
+    //   .string()
+    //   .required("Le champ est obligatoire")
+    //   .min(2, "Trop court")
+    //   .max(5, "Trop long"),
+    // password: yup
+    //   .string()
+    //   .required("Le mot de passe est obligatoire")
+    //   .min(5, "Mot de passe trop court")
+    //   .max(15, "Mot de passe trop long"),
+    // confirmPassword: yup
+    //   .string()
+    //   .required("Vous devez confirmer votre mot de passe")
+    //   .oneOf(
+    //     [yup.ref("password"), ""],
+    //     "Les mots de passes ne sont pas les mêmes"
+    //   ),
   });
+
+
+  const defaultValues ={
+    name: "",
+    other: {sign : "disabled", gender : "man"},
+    password:'',
+    confirmPassword:'',
+  }
+
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting, submitCount },
   } = useForm({
-    defaultValues: {
-      name: "",
-      gender: "man",
-    },
+    defaultValues,
     resolver: yupResolver(yupSchema),
     mode: 'onSubmit',
-  });
-  watch("name");
-  const submit = (values) => {
-    console.log(values);
+  })
+ 
+
+  const submit = async (values) => {
+    try{
+      clearErrors();
+      const response = await fetch ('https://restapi.fr/api/testr',
+        {method :'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(values)
+        }
+      )
+      if (response.ok){
+        throw new Error("Le nom n'est pas correct");
+        // const submitValue = await response.json();
+        // reset(defaultValues)
+        // console.log(submitValue)
+      }else {
+        console.log("error")
+      }
+    }catch(e){
+      setError("globalError", {type:"wrongName", message: e.message})
+    }
   };
 
   return (
@@ -52,16 +81,24 @@ function App() {
             id="name"
             type="text"
           />
-          {errors?.name && <p>{errors.name.message}</p>}
-
+         
+    
           <div className="btn-radioContent">
             <label htmlFor="sexe">Sexe</label>
             <div className="btn-radio">
               <label htmlFor="man">Homme</label>
-              <input {...register('gender')} type="radio" value='man'  id="man" />
+              <input {...register('other.gender')} type="radio" value='man'  id="man" />
               <label htmlFor="women">Femme</label>
-              <input {...register('gender')} type="radio" value="women"  id="women" />
+              <input {...register('other.gender')} type="radio" value="women"  id="women" />
             </div>
+          </div>
+          <div className="selectContain">
+            <select {...register('other.sign')} id="sign">
+              <option disabled value='disabled' > Choisit un signe</option>
+              <option value='fish'> Poisson</option>
+              <option value='aquarius'> Verseau</option>
+
+            </select>
           </div>
           <label htmlFor="password">password</label>
           <input
@@ -69,7 +106,8 @@ function App() {
             id="password"
             type="password"
           />
-          {errors?.password && <p>{errors.password.message}</p>}
+          
+          
           <label htmlFor="confirmPassword">Confirm password</label>
           <input
             {...register("confirmPassword", {
@@ -77,9 +115,10 @@ function App() {
             id="confirmPassword"
             type="password"
           />
-          {errors?.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          {/* why doesnt render error */}
+          {errors.globalErrors && <p>{errors.globalErrors.message}</p>}
 
-          <button className="btn-form"> Save</button>
+          <button className="btn-form" disabled={isSubmitting}> Save ({submitCount})</button>
         </div>
       </form>
     </AppStyled>
