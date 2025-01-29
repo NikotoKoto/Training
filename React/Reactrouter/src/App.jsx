@@ -1,10 +1,11 @@
+import Main from "./components/pages/Main"
 
 
 function App() {
 
 
   return (
-    
+    <Main/>
   )
 }
 
