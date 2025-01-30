@@ -8,13 +8,9 @@ export default function footer() {
 }
 
 const FooterStyled = styled.div`
-position: absolute;
-bottom: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-height: 60px;
-background-color: red;
+background: #333;
+    color: white;
+    padding: 10px;
+    text-align: center
     
 `

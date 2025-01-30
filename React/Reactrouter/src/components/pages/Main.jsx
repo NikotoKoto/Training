@@ -6,7 +6,7 @@ export default function Main() {
     <>
       <MainStyled>
         <Header />
-        <div className="title">App</div>
+        <div className="content">App</div>
         <Footer />
       </MainStyled>
     </>
@@ -14,10 +14,13 @@ export default function Main() {
 }
 
 const MainStyled = styled.div`
-  position: relative;
   display: flex;
-  width: 100%;
-  height: 100vh;
   flex-direction: column;
+  height: 100vh;
 
-`
+  .content{
+    flex: 1;
+    background: #f1f1f1;
+    padding: 20px;
+  }
+`;
