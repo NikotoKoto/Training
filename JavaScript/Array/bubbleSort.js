@@ -1,7 +1,7 @@
 const arr = [50,22,1,23,12]
 
 
-function bubbleSort() {
+function bubbleSort(arr) {
 let len = arr.length
 
 while(len > 0) {
