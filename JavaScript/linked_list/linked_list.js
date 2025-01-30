@@ -37,6 +37,37 @@ class LinkedList{
         this.size++
     }
 
+    removeFirst(){
+        let current = this.head;
+        if(!current){
+            return null;
+        }else{
+            this.head = current.next;
+            this.size--;
+            return current;
+        }
+    }
+
+
+    removeLast (){
+        let current = this.head;
+        if(!current){
+            return null;
+        }else if(!current.next){
+            this.head = null;
+            this.size--;
+            return current.value
+        }else{
+            while(current.next.next){
+                current = current.next;
+            }
+            const nodeValue = current.next.value;
+            current.next = null;
+            this.size--;
+            return nodeValue;
+        }
+    }
+
     add(value,position){
         if(position < 0 || position > this.size-1){
             throw new Error('wrong position');
@@ -54,6 +85,21 @@ class LinkedList{
 
     }
 
+    remove(position){
+        if(position < 0 || position > this.size -1){
+            throw new Error ("Wrong position");
+        }else{
+            let current = this.head;
+            while (position -1){
+                current = current.next;
+                position --;
+            }
+            const nodeValue = current.next.value;
+            current.next = current.next.next
+            return nodeValue;
+
+        }
+    }
     print(){
         let current = this.head;
         while(current){
@@ -72,5 +118,11 @@ linkedList.addFirst('b')
 linkedList.print();
 linkedList.addLast('c')
 linkedList.print();
-linkedList.add('c',0)
+linkedList.add('d',0)
+linkedList.print();
+linkedList.removeFirst();
+linkedList.print();
+linkedList.removeLast();
+linkedList.print();
+linkedList.remove(1);
 linkedList.print();
