@@ -16,17 +16,61 @@ class LinkedList{
     addFirst(value){
         let current = this.head;
         if(!current){
-            this.head = new Node()
+            this.head = new Node(value);
+        }else{
+            this.head = new Node(value, current);
         }
+        this.size++
     }
 
 
-    addLast(){
+    addLast(value){
+        let current = this.head;
+        if(!current){
+            this.head = new Node(value)
+        }else{
+            while(current.next){
+                current = current.next;
+            }
+            current.next = new Node(value)
+        }
+        this.size++
+    }
+
+    add(value,position){
+        if(position < 0 || position > this.size-1){
+            throw new Error('wrong position');
+        }else if ( position ===0 ){
+            this.head = new Node(value,this.head);
+        }else{
+            let current = this.head;
+            while ( position -1){
+                current = current.next;
+                position --;
+            }
+            current.next = new Node(value, current.next);
+        }
+        this.size++
 
     }
 
-    add(){
-
+    print(){
+        let current = this.head;
+        while(current){
+            process.stdout.write(`${current.value} ->`)
+            current = current.next
+        }
+        console.log('null')
     }
 }
 
+const linkedList = new LinkedList();
+
+linkedList.addFirst('a')
+linkedList.print();
+linkedList.addFirst('b')
+linkedList.print();
+linkedList.addLast('c')
+linkedList.print();
+linkedList.add('c',0)
+linkedList.print();
