@@ -1,7 +1,11 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useParams, useSearchParams } from 'react-router-dom'
 
 export default function Profil() {
+  const {id,name} = useParams()
+  const [queryParams, setQueryParams] = useSearchParams();
+  console.log(queryParams)
+  console.log(queryParams.get("age"))
   return (
 <>
     <ul>
