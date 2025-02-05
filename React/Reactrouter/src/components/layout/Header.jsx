@@ -1,5 +1,4 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export default function header() {
@@ -16,7 +15,7 @@ export default function header() {
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "link-active" : "")}
-          to="/profile/123/toto?age=12"
+          to="/profile/"
         >
           Profile
         </NavLink>
