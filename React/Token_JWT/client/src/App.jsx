@@ -1,13 +1,19 @@
 import Headers from './components/Headers/Headers'
 import Footer from "./components/Footer/Footer"
 import styled from 'styled-components'
+import { Outlet } from 'react-router-dom'
+import { Suspense } from 'react'
 export default function App() {
 
 
   return (
     <AppStyled>
       <Headers/>
-      <div className="AppContainer">App</div>
+      <div className="AppContainer">App
+        <Suspense>
+          <Outlet/>
+        </Suspense>
+      </div>
       <Footer/>
     </AppStyled>
   )

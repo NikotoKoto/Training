@@ -6,5 +6,8 @@ export default function HomePage() {
   )
 }
 const HomePageStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 `
